@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## Unreleased
+
+
+### Features
+
+* Add `global_upgradable` variable to support major version upgrades to global clusters. ([#425](https://github.com/terraform-aws-modules/terraform-aws-rds-aurora/issues/425))
+
 ## [9.13.0](https://github.com/terraform-aws-modules/terraform-aws-rds-aurora/compare/v9.12.0...v9.13.0) (2025-03-04)
 
 
