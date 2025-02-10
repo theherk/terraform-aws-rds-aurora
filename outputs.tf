@@ -81,12 +81,12 @@ output "cluster_hosted_zone_id" {
 
 output "cluster_ca_certificate_identifier" {
   description = "CA identifier of the CA certificate used for the DB instance's server certificate"
-  value       = try(aws_rds_cluster.this[0].ca_certificate_identifier, null)
+  value       = try(aws_rds_cluster.this[0].ca_certificate_identifier, try(aws_rds_cluster.global_upgradable[0].ca_certificate_identifier, null))
 }
 
 output "cluster_ca_certificate_valid_till" {
   description = "Expiration date of the DB instance’s server certificate"
-  value       = try(aws_rds_cluster.this[0].ca_certificate_valid_till, null)
+  value       = try(aws_rds_cluster.this[0].ca_certificate_valid_till, try(aws_rds_cluster.global_upgradable[0].ca_certificate_valid_till, null))
 }
 
 ################################################################################

@@ -174,6 +174,7 @@ resource "aws_rds_cluster" "global_upgradable" {
   availability_zones                  = var.availability_zones
   backup_retention_period             = var.backup_retention_period
   backtrack_window                    = local.backtrack_window
+  ca_certificate_identifier           = var.cluster_ca_cert_identifier
   cluster_identifier                  = var.cluster_use_name_prefix ? null : var.name
   cluster_identifier_prefix           = var.cluster_use_name_prefix ? "${var.name}-" : null
   cluster_members                     = var.cluster_members
@@ -186,11 +187,13 @@ resource "aws_rds_cluster" "global_upgradable" {
   delete_automated_backups            = var.delete_automated_backups
   deletion_protection                 = var.deletion_protection
   enable_global_write_forwarding      = var.enable_global_write_forwarding
+  enable_local_write_forwarding       = var.enable_local_write_forwarding
   enabled_cloudwatch_logs_exports     = var.enabled_cloudwatch_logs_exports
   enable_http_endpoint                = var.enable_http_endpoint
   engine                              = var.engine
   engine_mode                         = var.engine_mode
   engine_version                      = var.engine_version
+  engine_lifecycle_support            = var.engine_lifecycle_support
   final_snapshot_identifier           = var.final_snapshot_identifier
   global_cluster_identifier           = var.global_cluster_identifier
   iam_database_authentication_enabled = var.iam_database_authentication_enabled
@@ -238,6 +241,7 @@ resource "aws_rds_cluster" "global_upgradable" {
       max_capacity             = try(scaling_configuration.value.max_capacity, null)
       min_capacity             = try(scaling_configuration.value.min_capacity, null)
       seconds_until_auto_pause = try(scaling_configuration.value.seconds_until_auto_pause, null)
+      seconds_before_timeout   = try(scaling_configuration.value.seconds_before_timeout, null)
       timeout_action           = try(scaling_configuration.value.timeout_action, null)
     }
   }
@@ -246,8 +250,9 @@ resource "aws_rds_cluster" "global_upgradable" {
     for_each = length(var.serverlessv2_scaling_configuration) > 0 && var.engine_mode == "provisioned" ? [var.serverlessv2_scaling_configuration] : []
 
     content {
-      max_capacity = serverlessv2_scaling_configuration.value.max_capacity
-      min_capacity = serverlessv2_scaling_configuration.value.min_capacity
+      max_capacity             = serverlessv2_scaling_configuration.value.max_capacity
+      min_capacity             = serverlessv2_scaling_configuration.value.min_capacity
+      seconds_until_auto_pause = try(serverlessv2_scaling_configuration.value.seconds_until_auto_pause, null)
     }
   }
 
