@@ -2,6 +2,11 @@
 
 Terraform module which creates AWS RDS Aurora resources.
 
+> [!note]
+> This is a fork of [terraform-aws-modules/terraform-aws-rds-aurora](https://github.com/terraform-aws-modules/terraform-aws-rds-aurora).
+> It will be maintained until #425 is resolve by something like #426.
+> diff: https://github.com/terraform-aws-modules/terraform-aws-rds-aurora/compare/master...theherk:terraform-aws-rds-aurora:master
+
 [![SWUbanner](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner2-direct.svg)](https://github.com/vshymanskyy/StandWithUkraine/blob/main/docs/README.md)
 
 ## Available Features
